@@ -22,3 +22,6 @@ erl_crash.dump
 # Intellij idea
 *.iml
 .idea/
+
+# elixir language server
+.elixir_ls
