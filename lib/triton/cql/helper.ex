@@ -34,7 +34,11 @@ defmodule Triton.CQL.Helper do
     end
   end
 
-  def binary_value(%MapSet{} = m), do: "{" <> Enum.join(m, ",") <> "}"
+  def binary_value(%MapSet{} = m) do
+    v = m |> Enum.map(&binary_value/1) |> Enum.join(",")
+    "{" <> v <> "}"
+  end
+
   def binary_value(v) when is_map(v), do: "{" <> Enum.map_join(v, ",", &binary_value/1) <> "}"
 
   # This will fail if v `is_map`, nested maps are generally not OK
