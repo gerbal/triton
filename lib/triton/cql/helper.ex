@@ -1,5 +1,6 @@
 defmodule Triton.CQL.Helper do
   def field_value(nil, _), do: "NULL"
+  def field_value(%MapSet{} = field, _), do: binary_value(field)
   def field_value(field, {:map, _}) when is_map(field), do: binary_value(field)
 
   def field_value(field, :timestamp) when is_binary(field) do
@@ -33,6 +34,7 @@ defmodule Triton.CQL.Helper do
     end
   end
 
+  def binary_value(%MapSet{} = m), do: "{" <> Enum.join(m, ",") <> "}"
   def binary_value(v) when is_map(v), do: "{" <> Enum.map_join(v, ",", &binary_value/1) <> "}"
 
   # This will fail if v `is_map`, nested maps are generally not OK
