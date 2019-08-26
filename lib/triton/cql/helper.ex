@@ -1,6 +1,5 @@
 defmodule Triton.CQL.Helper do
   def field_value(nil, _), do: "NULL"
-  def field_value(field, _) when is_list(field), do: binary_value(field)
   def field_value(%MapSet{} = field, _), do: binary_value(field)
   def field_value(field, {:map, _}) when is_map(field), do: binary_value(field)
 
@@ -33,11 +32,6 @@ defmodule Triton.CQL.Helper do
     else
       "'" <> v <> "'"
     end
-  end
-
-  def binary_value(m) when is_list(m) do
-    v = m |> Enum.map(&binary_value/1) |> Enum.join(",")
-    "[" <> v <> "]"
   end
 
   def binary_value(%MapSet{} = m) do
