@@ -11,6 +11,7 @@ defmodule Triton.CQL.Helper do
     |> to_string()
   end
 
+  def field_value(v, :blob), do: "0x#{Base.encode16(v)}"
   def field_value(v, :counter), do: v
 
   def field_value(field, {_, _}), do: field
